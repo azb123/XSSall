@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台边栏</title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+<style>
+body,html{height:100%}
+</style>
+<script language="javascript" type="text/javascript">
+$(function () {
+$('.con ul li a').click(function () {
+$('.con ul li a').removeClass('hover'); 
+$(this).addClass('hover');  
+})
+})
+</script>
+</head>
+
+<body style="background-color:#f2f9fd">
+<div class="sidebar">
+  <div class="logo"></div>
+  <div class="con">
+  
+  <{if !$fenlei || $fenlei eq 'guestbook'}>
+  
+  <ul>
+  	<li class="tit"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 留言板管理</li>
+    <li><a href="<{spUrl c=adminGuestbook a=ListGuestbook}>" target="mainFrame"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> 留言板列表</a></li>
+    <li><a href="<{spUrl c=adminGuestbook a=add}>" target="mainFrame"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 留言板添加</a></li>
+    <li><a href="<{spUrl c=guestbookCall a=ListGuestbookCall}>" target="mainFrame"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 留言板调用</a></li>
+  </ul>
+  
+  <{elseif $fenlei eq 'adminuser'}>
+  
+  <ul>
+      <li class="tit">管理员管理</li>
+      <li><a href="<{spUrl c=Administrator a=ListAdmin}>" target="mainFrame"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 管理员列表</a></li>
+      <li><a href="<{spUrl c=Administrator a=add}>" target="mainFrame"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加管理员</a></li>
+  </ul>
+    
+  <{/if}>
+  
+  <!--谢谢您的支持，全开源不容易，请勿删除版权信息-->
+  <div class="zhichi">问题反馈：<a href="http://syguestbook.sucainiu.com" target="_blank">By 随意留言板</a></div>
+  
+  </div>
+</div>
+</body>
+</html>

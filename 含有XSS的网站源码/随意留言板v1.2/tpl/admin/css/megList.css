@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+.content .megList{border-top:#cccccc 3px solid; padding:15px; padding-left:95px; position:relative}
+.content .bg1{background-color: #f8f8f8;}
+.content .bg2{background-color: #FFF;}
+.content .bg1:hover,.content .bg2:hover{border-top: #b5cfd9 3px solid;color: #000;background-color: #f2f9fd;}
+.content .megList .head{width:70px; position:absolute; top:15px; left:15px;}
+.content .megList .head img{border-radius:5px; border:#cccccc 1px solid; padding:3px; background-color:#FFF; width:63px;}
+.content .megList .meg{border-left:#CCC 1px solid; padding-left:20px;}
+.content .megList .meg .mTop{font-size:12px; padding-bottom:10px; border-bottom:#CCC 1px solid; color:#666}
+
+.content .megList .meg .mContent{padding:18px 0px; font-size:13px; line-height:25px;}
+.content .megList .meg .mContent .reply{background-color: #FFFFFF;padding:10px 15px;font-size: 12px;border: 1px dashed #cccccc;margin-top:15px;color:#999;}
+.content .megList .meg .mContent .reply .tit{ border-bottom:#cccccc 1px solid; padding-bottom:5px; margin-bottom:5px; font-weight:bold; color:#FF8080}
+.content .megList .meg .mContent .reply .con{line-height:20px;}
+
+.content .megList .meg .mSm{padding-top:10px; border-top:#CCC 1px solid; text-align:right; color:#666}
+
+.content .Megnew{display:inline-block;width:45px;height:13px;background-image: url(../../images/new.gif);background-repeat: no-repeat;background-position: center center; margin-bottom:-2px; margin-left:3px;}

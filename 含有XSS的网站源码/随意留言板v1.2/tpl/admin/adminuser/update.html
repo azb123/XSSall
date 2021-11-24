@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$title}> - <{$smarty.const.WEBNAME}></title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript">
+ function cheackbook(){
+	var form=document.myform;
+	if (form.user.value.replace(/ /g,"")==""){
+		alert("帐号不能为空，请重新填写！");
+		form.user.focus();
+		return false;
+		}
+	if (form.pass.value.replace(/ /g,"")==""){
+		alert("密码不能为空，请重新填写！");
+		form.pass.focus();
+		return false;
+		}
+
+		}
+</script>
+</head>
+
+<body>
+<!--admin-bread-->
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li><a href="<{spUrl c=Administrator a=ListAdmin}>">帐号列表</a></li>
+      <li>/</li>
+      <li><{$title}></li>
+  </ul>
+</div><!--admin-bread End-->
+
+<!--content-->
+<div class="content">
+<form name="myform" onsubmit="return cheackbook();" id="myform" method="post" action="<{spUrl c=Administrator a=update id=$admins.id}>">
+
+<div class="form-group">
+  <label for="username">帐号：</label>
+  <input name="username" type="test" class="form-control" id="username" value="<{$admins.username}>">
+</div>
+
+<div class="form-group">
+  <label for="pass_new">密码：</label>
+  <input name="pass_new" type="test" class="form-control" id="pass_new" value=""><input name="pass_old" type="hidden" id="pass_old" value="<{$admins.password}>" />
+</div>
+
+<{if $smarty.session.admin.admin eq 'admin'}>
+<div class="form-group">
+  <label for="admin">管理等级：</label>
+  <select name="admin" id="admin"  class="form-control">
+  <option value="<{$admins.admin}>" selected="selected">当前：<{$admins.admin}></option>
+  <option value="user">普通管理员（user）</option>
+  <option value="admin">系统管理员（admin）</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="gid">绑定留言板：</label>
+  <select name="gid" id="gid"  class="form-control">
+  <option value="<{$admins.gid}>" selected="selected">当前：<{tpl_GidToGname gid=$admins.gid admin=$admins.admin}></option>
+  <{foreach from=$gList item=g}>
+  <option value="<{$g.id}>"><{$g.gName}></option>
+  <{/foreach}>
+  </select>
+</div>
+<{else}>
+绑定留言板：<{tpl_GidToGname gid=$admins.gid admin=$admins.admin}>
+<{/if}>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <button type="submit" name="submit" value="确认修改" class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 确认修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="reset" value="重置" class="btn btn-default" />
+  </div>
+</nav>
+
+</form>
+</div><!--content End-->
+</body>
+</html>

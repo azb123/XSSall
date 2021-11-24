@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$title}> - <{$smarty.const.WEBNAME}></title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript">
+ function cheackbook(){
+	var form=document.myform;
+	if (form.username.value.replace(/ /g,"")==""){
+		alert("帐号不能为空，请重新填写！");
+		form.username.focus();
+		return false;
+		}
+	if (form.password.value.replace(/ /g,"")==""){
+		alert("密码不能为空，请重新填写！");
+		form.password.focus();
+		return false;
+		}
+
+		}
+</script>
+</head>
+
+<body>
+<!--admin-bread-->
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li><a href="<{spUrl c=Administrator a=ListAdmin}>">帐号列表</a></li>
+      <li>/</li>
+      <li><{$title}></li>
+  </ul>
+</div><!--admin-bread End-->
+
+<!--content-->
+<div class="content">
+<form name="myform" onsubmit="return cheackbook();" id="myform" method="post" action="<{spUrl c=Administrator a=add}>">
+
+<div class="form-group">
+  <label for="username">帐号：</label>
+  <input name="username" type="test" class="form-control" id="username" value="">
+</div>
+
+<div class="form-group">
+  <label for="password">密码：</label>
+  <input name="password" type="test" class="form-control" id="password" value="">
+</div>
+
+<div class="form-group">
+  <label for="admin">管理等级：</label>
+  <select name="admin" id="admin"  class="form-control">
+  <option value="user" selected="selected">普通管理员（user）</option>
+  <option value="admin">系统管理员（admin）</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="gid">绑定留言板：</label>
+  <select name="gid" id="gid"  class="form-control">
+  <option value="0" selected="selected">--- 请选择要管理的留言板 ---</option>
+  <{foreach from=$gList item=g}>
+  <option value="<{$g.id}>"><{$g.gName}></option>
+  <{/foreach}>
+  </select>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <button type="submit" name="submit" value="确认添加" class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 确认添加</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="reset" value="重置" class="btn btn-default" />
+  </div>
+</nav>
+
+</form>
+</div><!--content End-->
+</body>
+</html>

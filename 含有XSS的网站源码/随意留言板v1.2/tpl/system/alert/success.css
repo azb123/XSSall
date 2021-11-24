@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset { margin:0; padding:0; font-size:12px; }
+body{background-image: url(../images/bg_repx_hb.gif);background-repeat: repeat-x;background-position: center top;}
+.container{ padding:9px 20px 20px; text-align:left; margin-top:20px; }
+.container h3.h3success{margin-bottom:10px;font-size:14px;color:#09C;}
+.container h3.h3error{margin-bottom:10px;font-size:14px;color:#F00;}
+.container .success{clear: both;margin-bottom: 10px;padding: 30px;text-align: center;border-top: 4px solid #DEEFFA;border-bottom: 4px solid #DEEEFA;background: #F2F9FD;zoom: 1;}
+.container .success .infotitle_success{margin-bottom:10px; color:#090; font-size:14px; font-weight:700; }
+.container .success .infotitle_error{margin-bottom:10px; color:#F00; font-size:14px; font-weight:700; }
+.container .success .marginbot{margin-bottom:10px;}
+.lightlink_success{color:#666; text-decoration:underline;}
+.lightlink_error{color:#666; text-decoration:underline;}

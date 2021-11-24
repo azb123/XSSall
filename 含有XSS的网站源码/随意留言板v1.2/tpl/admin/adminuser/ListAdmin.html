@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$title}> - <{$smarty.const.WEBNAME}></title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/tanchuang/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!--admin-bread-->
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li><{$title}></li>
+  </ul>
+</div><!--admin-bread End-->
+
+<!--content-->
+<div class="content">
+
+<!--panel panel-default-->
+<div class="panel panel-default">
+<div class="panel-heading">
+<span class="fl">
+<a class="btn btn-success" href="<{spUrl c=Administrator a=add}>"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加管理员</a>
+</span>
+
+<span class="fr" style="width:300px;"></span>
+<div class="clear"></div>
+</div>
+<table  class="table table-hover table-bordered">
+  <tr class="active">
+    <td width="50" align="center" class="bgc"><strong>ID</strong></td>
+    <td class="bgc"><strong>帐号</strong></td>
+    <td align="center" class="bgc"><strong>级别</strong></td>
+    <td align="center" class="bgc"><strong>留言板绑定</strong></td>
+    <td width="150" align="center" class="bgc"><strong>操作</strong></td>
+  </tr>
+  <{foreach from=$results item=one}>
+  <tr>
+    <td align="center"><{$one.id}></td>
+    <td><{$one.username}></td>
+    <td align="center"><{if $one.admin eq 'admin'}>系统管理员<{elseif $one.admin eq 'user'}>普通管理员<{/if}></td>
+    <td align="center"><{tpl_GidToGname gid=$one.gid admin=$one.admin}></td>
+    <td align="center">
+      <a class="btn btn-primary btn-xs" href="<{spUrl c=Administrator a=update id=$one.id}>">编辑</a>&nbsp;&nbsp;<a class="btn btn-danger btn-xs" href="javascript:void(0);" onclick="delconfirm(<{$one.id}>,'<{$one.username}>');" title="Delete">删除</a>
+    </td>
+  </tr>
+  <{/foreach}>
+</table>
+</div><!--panel panel-default End-->
+
+<!--分页-->
+<{if $pager}>
+<div class="pager">
+共有记录<{$pager.total_count}>条，共有<{$pager.total_page}>页（每页<{$pager.page_size}>条）：
+<{$max_page=5}>
+<!--每页最大页码数-->
+<!--开始及结束页码--> 
+<{if $pager.current_page%$max_page ==0}>
+<{$start_page=floor($pager.current_page/$max_page)*$max_page+1-$max_page}>
+<{else}>
+<{$start_page=floor($pager.current_page/$max_page)*$max_page+1}>
+<{/if}>     
+<{if ($start_page+$max_page)<=$pager.total_page}>
+<{$end_page=$start_page+$max_page-1}>
+<{else}>
+<{$end_page=$pager.total_page}>
+<{/if}>
+<{if $start_page <= 1 and $pager.current_page <= 1 }>
+首 | 
+« |         
+<{elseif $pager.current_page > 1 and $pager.total_page <= $max_page}>
+<a href="<{spUrl c=$c a=$a page=$pager.first_page}>#pl">首</a> | 
+<a href="<{spUrl c=$c a=$a page=$pager.prev_page}>#pl">«</a> | 
+<{elseif  $pager.current_page > 1 and $pager.current_page<=$max_page}>
+<a href="<{spUrl c=$c a=$a page=$pager.first_page}>#pl">首</a> | 
+<a href="<{spUrl c=$c a=$a page=$pager.prev_page}>#pl">«</a> | 
+<{else}>
+<a href="<{spUrl c=$c a=$a page=$pager.first_page}>#pl">首</a> |  
+<a href="<{spUrl c=$c a=$a page=$pager.prev_page}>#pl">«</a> | 
+<a href="<{spUrl c=$c a=$a page=$pager.current_page-$max_page}>#pl">-<{$max_page}></a> |  
+<{/if}>
+<!--开始循环页码，同时如果循环到当前页设置属性为active-->
+<{foreach from = $pager.all_pages item = thepage}>        
+<{if $thepage <= $end_page and $thepage >= $start_page}>  
+<{if $thepage == $pager.current_page}>
+  <b><{$thepage}></b> | 
+<{else}>
+  <a href="<{spUrl c=$c a=$a page=$thepage}>#pl"><{$thepage}></a> |                  
+<{/if}>
+<{/if}>
+<{/foreach}>
+<{if $end_page == $pager.total_page }> 
+<{if $pager.current_page == $pager.last_page}>
+» | 尾 
+<{else}>
+<a href="<{spUrl c=$c a=$a page=$pager.next_page}>#pl">»</a> |  
+<a href="<{spUrl c=$c a=$a page=$pager.last_page}>#pl">尾</a>
+<{/if}>
+<{else}> 
+<a href="<{spUrl c=$c a=$a page=$pager.current_page+$max_page}>#pl">+<{$max_page}></a> |  
+<a href="<{spUrl c=$c a=$a page=$pager.next_page}>#pl">»</a> |  
+<a href="<{spUrl c=$c a=$a page=$pager.last_page}>#pl">尾</a>
+<{/if}> 
+</div>
+<{/if}>
+<!--分页 end-->
+
+</div><!--content End-->
+<script>
+function delconfirm(id,username){
+	if( window.confirm("确定删除“" + username + "”？") ){
+		window.location = "<{spUrl c=Administrator a=del}>&id=" + id;
+	}
+}
+</script>
+</body>
+</html>

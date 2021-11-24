@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><{$title}> - <{$smarty.const.WEBNAME}></title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript"> //表单控制
+function cheackbook(){
+	var form=document.myform;
+	if (form.gName.value.replace(/ /g,"")==""){
+		alert("名称不能为空，请重新填写！");
+		form.gName.focus();
+		return false;
+		}
+		
+		}
+</script>
+<link href="include/KindEditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="include/KindEditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="include/KindEditor/lang/zh_CN.js"></script>
+<script>
+KindEditor.ready(function(K) {
+K.create('textarea[class="gIntroduction"]', {
+autoHeightMode : true,
+urlType : 'domain',
+afterCreate : function() {
+this.loadPlugin('autoheight');
+}
+});
+});
+
+KindEditor.ready(function(K) {					  
+var uploadbutton = K.uploadbutton({
+button : K('#AngLogo')[0],
+fieldName : 'imgFile',
+url : 'include/KindEditor/php/upload_json.php?dir=image',
+afterUpload : function(data) {
+if (data.error === 0) {
+var url = K.formatUrl(data.url, 'absolute');
+K('#gLogo').val(url);
+document.getElementById("gLogoImg").src=url
+} else {
+alert(data.message);
+}
+},
+afterError : function(str) {
+alert('自定义错误信息: ' + str);
+}
+});
+uploadbutton.fileBox.change(function(e) {
+uploadbutton.submit();
+});
+});
+
+KindEditor.ready(function(K) {					  
+var uploadbutton = K.uploadbutton({
+button : K('#AngBanner')[0],
+fieldName : 'imgFile',
+url : 'include/KindEditor/php/upload_json.php?dir=image',
+afterUpload : function(data) {
+if (data.error === 0) {
+var url = K.formatUrl(data.url, 'absolute');
+K('#gBanner').val(url);
+document.getElementById("gBannerImg").src=url
+} else {
+alert(data.message);
+}
+},
+afterError : function(str) {
+alert('自定义错误信息: ' + str);
+}
+});
+uploadbutton.fileBox.change(function(e) {
+uploadbutton.submit();
+});
+});
+</script>
+
+</head>
+
+<body style="padding-bottom:20px;">
+<!--admin-bread-->
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li>新增留言板</li>
+  </ul>
+</div><!--admin-bread End-->
+
+<!--content-->
+<div class="content">
+<form name="myform" onsubmit="return cheackbook();" id="myform" method="post" action="<{spUrl c=adminGuestbook a=add}>">
+  <ul id="myTab" class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 基本信息配置</a></li>
+    <li role="presentation" class=""><a href="#diy" role="tab" id="diy-tab" data-toggle="tab" aria-controls="diy" aria-expanded="false"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 自定义配置</a></li>
+    <li role="presentation" class=""><a href="#seo" role="tab" id="seo-tab" data-toggle="tab" aria-controls="seo" aria-expanded="false"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> SEO优化</a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content tab-diy-con">
+  
+    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+    
+    <div class="form-group">
+      <label for="gName">留言本标题：</label>
+      <input name="gName" type="text" class="form-control" id="gName" value="">
+    </div>
+    
+    <hr />
+    
+    <div class="form-group">
+      <label for="gLogo">LOGO：</label>
+      <p class="help-block"><img src="tpl/images/notlogo.jpg" name="gLogoImg" height="60" id="gLogoImg" style="margin-bottom:10px;"></p>
+      <input type="text" name="gLogo" id="gLogo" value="" class="form-control">
+      <p class="help-block"><input id="AngLogo" name="AngLogo" type="submit" value="选择图片"></p>
+    </div>
+    
+    <hr />
+    
+    <div class="form-group">
+      <label for="gBanner">Banner：</label>
+      <p class="help-block"><img src="tpl/images/notlogo.jpg" name="gBannerImg" height="60" id="gBannerImg" style="margin-bottom:10px;"></p>
+      <input type="text" name="gBanner" id="gBanner" value="" class="form-control">
+      <p class="help-block"><input id="AngBanner" name="AnggBanner" type="submit" value="选择图片"></p>
+    </div>
+    
+    <hr />
+    
+    <div class="form-group">
+      <label for="gIntroduction">留言板介绍：</label>
+      <textarea name="gIntroduction" id="gIntroduction" class="gIntroduction" rows="5" style="width:100%;"></textarea>
+    </div>
+
+    
+    <div class="form-group">
+      <label for="gPowerby">底部版权：</label>
+      <input name="gPowerby" type="text" class="form-control" id="powerby" value="">
+    </div>
+    
+    <div class="form-group">
+      <label for="gTongji">统计代码：</label>
+      <textarea name="gTongji" class="form-control" rows="3"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="gBeian">备案编号：</label>
+      <input name="gBeian" type="text" class="form-control" id="beian" value="">
+    </div>
+    </div>
+    
+    <div role="tabpanel" class="tab-pane fade" id="diy" aria-labelledby="diy-tab">
+    
+    <div class="form-group">
+      <label for="gTpl">自定义模版：</label>
+      <select name="gTpl" class="form-control">
+      	<option value="default">默认：default</option>
+        <{foreach from=$tplList item=list}>
+          <option value="<{$list|replace:$dirUrl:''}>"><{$list|replace:$dirUrl:''}></option>
+        <{/foreach}>
+      </select>
+      <p class="help-block">模版目录：/tpl/buestbook/(新模版放这里)</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gNav">自定义导航：</label>
+      <textarea name="gNav" class="form-control" rows="4"></textarea>
+      <p class="help-block">格式：标题|网址（百度|http://baidu.com），一行一个</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gHead">调用头像类型：</label>
+      <select name="gHead" class="form-control">
+      	<option value="qqshow">默认：QQ秀</option>
+        <option value="qqshow">QQ秀</option>
+        <option value="qqhead">QQ头像</option>
+      </select>
+      <p class="help-block">[QQ秀/qqshow]：调用QQ秀作为头像。[QQ头像/qqhead]：调用QQ头像作为头像。</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gPag">每页显示留言数：</label>
+      <select name="gPag" class="form-control">
+      	<option value="8">默认：8条</option>
+        <option value="5">5条</option>
+        <option value="8">8条</option>
+        <option value="10">10条</option>
+        <option value="15">15条</option>
+        <option value="20">20条</option>
+        <option value="25">25条</option>
+        <option value="30">30条</option>
+        <option value="35">35条</option>
+        <option value="40">40条</option>
+        <option value="45">45条</option>
+        <option value="50">50条</option>
+      </select>
+      <p class="help-block">[需要]：审核后再显示。[不需要]：留言后直接显示。</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gCheck">是否需要审核：</label>
+      <select name="gCheck" class="form-control">
+      	<option value="yes">需要</option>
+        <option value="no">不需要</option>
+      </select>
+      <p class="help-block">[需要]：审核后再显示。[不需要]：留言后直接显示。</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gDisplay">是否显示留言列表：</label>
+      <select name="gDisplay" class="form-control">
+      	<option value="yes">显示</option>
+        <option value="no">不显示</option>
+      </select>
+      <p class="help-block">[显示]：前台显示留言内容。[不显示]：前台不显示留言内容，只有管理员后台可见</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gFilter">是否开启安全过滤：</label>
+      <select name="gFilter" class="form-control">
+      	<option value="yes">开启</option>
+        <option value="no">关闭</option>
+      </select>
+      <p class="help-block">[开启][关闭]：开启后会严格控制留言内容，防止灌水</p>
+    </div>
+    
+    </div>
+    
+    <div role="tabpanel" class="tab-pane fade" id="seo" aria-labelledby="seo-tab">
+    <div class="form-group">
+      <label for="gKeywords">Keywords（关键字）：</label>
+      <textarea name="gKeywords" class="form-control" rows="3"></textarea>
+      <p class="help-block">留言板关键字，多个用“，”隔开</p>
+    </div>
+    
+    <div class="form-group">
+      <label for="gDescription">Description（描述）：</label>
+      <textarea name="gDescription" class="form-control" rows="3"></textarea>
+      <p class="help-block">留言板简单描述</p>
+    </div>
+    </div>
+    
+  </div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <button type="submit" name="submit" value="确认添加留言板" class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 确认添加留言板</button>
+  </div>
+</nav>
+</form>
+
+</div><!--content End-->
+</body>
+</html>

@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+ul{padding:0;margin:0}
+li{list-style:none;vertical-align:bottom}
+.w1000{width:1020px;margin:auto}
+.fl{float:left}
+.fr{float:right}
+.clear{clear:both}
+.b5{height:5px}
+.b10{height:10px}
+.b8{height:8px}
+.b15{height:15px}
+.b20{height:20px}
+.f12{font-size:12px}
+.f13{font-size:13px}
+.f14{font-size:14px}
+.f15{font-size:15px}
+.f16{font-size:16px}
+.radius8{-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.radius5{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}
+.top{background-color:#e6f2fb;height:50px;border-bottom:solid 5px #09c;padding:6px 20px 0 20px}
+.top ul.list-inline{height:40px;line-height:40px;width:430px;float:left}
+.top .list-inline a{display:block;width:80px;text-align:center;color:#333;height:40px;line-height:40px;border-radius:5px 5px 0 0}
+.top .list-inline a:hover{color:#FFF;background-color:#09c}
+.top .list-inline a.hover{color:#FFF;background-color:#09c}
+.top ul.fr{width:300px;line-height:40px;font-size:12px}
+.top ul.fr li{float:right;margin-left:10px;color:#999}
+.top ul.fr li a{color:#999}
+.top ul.fr li a:hover{color:#333}
+.sidebar{background-color:#f2f9fd;border-right:solid 1px #b5cfd9;height:100%}
+.sidebar .logo{height:86px;background-color:#e6f2fb;background-image:url(../images/logo.jpg);background-repeat:no-repeat;background-position:center center}
+.sidebar .con ul li{line-height:30px;height:30px}
+.sidebar .con ul li.tit{line-height:35px;height:35px;background:#e6f2fb;border-top:solid 1px #b5cfd9;border-bottom:solid 1px #b5cfd9;font-size:16px;font-weight:700;margin-bottom:10px;padding-left:20px}
+.sidebar .con ul li a{color:#333;padding-left:20px;display:block}
+.sidebar .con ul li a:hover{background-color:#D7EAF9;color:#09c}
+.sidebar .con ul li a.hover{background-color:#D7EAF9;color:#09c}
+.sidebar .conLanmu ul li{line-height:30px;height:30px}
+.sidebar .conLanmu ul li.tit{line-height:35px;height:35px;background:#e6f2fb;border-top:solid 1px #b5cfd9;border-bottom:solid 1px #b5cfd9;font-size:16px;font-weight:700;padding-left:15px}
+.sidebar .conLanmu ul li.tit a:hover{background:0 0;color:#333}
+.sidebar .conLanmu ul li a{color:#333;display:block}
+.sidebar .conLanmu ul li a:hover,a.hover{background-color:#D7EAF9;color:#09c}
+.admin-bread{background:#f2f9fd;border-bottom:solid 1px #b5cfd9;line-height:37px;height:37px;padding:0 10px}
+.admin-bread ul{padding:0;margin:0}
+.admin-bread ul li{float:left;margin-right:5px;color:#666}
+.admin-bread ul li a{color:#333}
+.content{padding:20px}
+.zhichi{margin-top:10px;padding-top:10px;padding-bottom:10px;border-top:solid 1px #b5cfd9;padding-left:20px}
+.tab-diy-con{padding:15px 0}
+.content .pag{background-color:#F7F7F7;border:1px solid #E4E4E4;text-align:center}
+.content .pag a{display:inline-block;height:20px;line-height:20px;padding:0 6px;border:1px inset #CCC;margin:0 3px;background-color:#FFF;color:#666;font-size:12px}
+.content .pag a.Invalid,.content .pag a.present,.content .pag a:hover{border:1px outset #CCC;background-color:#E8E8E8;color:#000}
+.zhichi{ font-size:12px;} 

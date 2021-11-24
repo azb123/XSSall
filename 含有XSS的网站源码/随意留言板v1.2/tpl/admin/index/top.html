@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+<script language="javascript" type="text/javascript">
+$(function () {
+$('ul.list-inline li a').click(function () {
+$('ul.list-inline li a').removeClass('hover'); 
+$(this).addClass('hover');  
+})
+})
+</script>
+</head>
+
+<body>
+<div class="top">
+<ul class="list-inline">
+  <{if $smarty.session.admin.admin eq 'admin'}>
+  <li><a href="<{spUrl c=admin a=menu fenlei=guestbook}>"  target="leftFrame"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 留言板</a></li>
+  <li><a href="<{spUrl c=admin a=menu fenlei=adminuser}>" target="leftFrame"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 管理员</a></li>
+  <{/if}>
+  
+</ul>
+<ul class="fr">
+  <li><a href="<{spUrl c=main a=logout}>" target="_top">注销</a></li>
+  <li><a href="<{spUrl c=Administrator a=update id=$smarty.session.admin.id}>" target="mainFrame">修改密码</a></li>
+  <li>管理员 [<{$smarty.session.admin.username}>]</li>
+  <li><a target="_blank" href="<{spUrl c=guestbook}>">前台首页</a></li>
+</ul>
+</div>
+</body>
+</html>

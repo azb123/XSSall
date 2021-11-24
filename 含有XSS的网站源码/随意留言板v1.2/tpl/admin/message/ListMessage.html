@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$title}> - <{$smarty.const.WEBNAME}></title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<link href="tpl/admin/css/megList.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+function reply(mid,gid)
+{
+	$.ajax({
+	  type:"POST",
+	  url:"<{spUrl c=adminMessage a=reply}>",
+	  data:"mid="+mid+"&gid="+gid,
+	  cache:false,
+	  success:function(data){
+	  $("#replyForm").html(data);
+	  }
+});
+return false;
+}
+
+function replyButton(mid)
+{
+	var reply = $("#replyVal").val();
+	var status = $("input[name='status']:checked").val();
+	$.ajax({
+	  type:"POST",
+	  url:"<{spUrl c=adminMessage a=AjaxReplyPost}>",
+	  data:"mid="+mid+"&reply="+reply+"&status="+status,
+	  cache:false,
+	  success:function(data){
+		if(data!='no')
+		{
+			$('#replyModal').modal('hide');
+			$("#reply"+mid).html('<div class="reply"><div class="con">'+data+'</div></div>');
+		}
+		else
+		{
+			$("#replyMessage").html('回复失败');
+			alert('回复失败');
+		}
+		
+	  }
+});
+return false;
+
+}
+
+</script>
+</head>
+
+<body>
+<!--admin-bread-->
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li><{$title}></li>
+      <li>/</li>
+      <li><{$g.gName}></li>
+  </ul>
+</div><!--admin-bread End-->
+
+<!--content-->
+<div class="content">
+
+<h4 style="margin-top:0px;"><{$g.gName}></h4>
+<p><{tpl_MegSum gid=$g.id}> - 管理员：<{tpl_adminuserList gid=$g.id}></p>
+
+<{if $lists}>
+<{foreach from=$lists item=m}>
+<div class="<{cycle values='megList bg1,megList bg2'}>">
+  <div class="head"><img src="<{tpl_HeadImg qq=$m.qq mold=$g.gHead}>" /></div>
+  <div class="meg">
+    <div class="mTop">
+      <span class="fl">网友：<{$m.name}>&nbsp;&nbsp;&nbsp;发布时间：<{tpl_dateTime format='Y年m月d日 H:i' timestamp=$m.addtime}> - <{tpl_formatTime date=$m.addtime type=1}></span>
+      <span class="fr">ID:<{$m.id}> - <{if $m.status eq 'no'}><span class="text-danger"><span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> 隐藏</span><{elseif $m.status eq 'yes'}><span class="text-success"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 显示</span><{/if}></span>
+      <div class="clear"></div>
+    </div>
+    <div class="mContent">
+      <{$m.message}>
+      <{if $m.reply}>
+      <div class="reply">
+        <div class="tit">管理员<{$m.replyAdmin}>回复：</div>
+        <div class="con" id="reply<{$m.id}>"><{$m.reply}></div>
+      </div>
+      <{else}>
+        <div id="reply<{$m.id}>"><{$m.reply}></div>
+      <{/if}>
+    </div>
+    <div class="mSm">
+      <span class="fl"><{$m.address}>（<{$m.ip}>） - 赞（<{$m.good}>） - <a class="text-danger" href="javascript:void(0);" onclick="delconfirm('id','<{$m.id}>','确定删除(ID:<{$m.id}>)的留言吗？');"><span class="glyphicon glyphicon-remove"></span> 删除单个留言</a> - <a class="text-danger" href="javascript:void(0);" onclick="delconfirm('ip','<{$m.ip}>','确定删除(IP:<{$m.ip}>)下的全部留言吗？');"><span class="glyphicon glyphicon-remove"></span> 删除同IP留言</a></span>
+      <span class="fr"><a href="javascript:void(0);" onclick="reply('<{$m.id}>','<{$g.id}>')" data-toggle="modal" data-target="#replyModal" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-comment"></span> 回复/审核</a></span>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<{/foreach}>
+<{else}>
+<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 暂无留言！</div>
+<{/if}>
+
+<!--分页-->
+<{if $pager}>
+
+<div class="b15"></div>
+
+<div class="pag">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">
+      <div class="pager">
+      共有记录<{$pager.total_count}>条，共有<{$pager.total_page}>页（每页<{$pager.page_size}>条）：
+      <{$max_page=5}>
+      <!--每页最大页码数-->
+      <!--开始及结束页码--> 
+      <{if $pager.current_page%$max_page ==0}>
+      	<{$start_page=floor($pager.current_page/$max_page)*$max_page+1-$max_page}>
+      <{else}>
+      	<{$start_page=floor($pager.current_page/$max_page)*$max_page+1}>
+      <{/if}>     
+      <{if ($start_page+$max_page)<=$pager.total_page}>
+      	<{$end_page=$start_page+$max_page-1}>
+      <{else}>
+      	<{$end_page=$pager.total_page}>
+      <{/if}>
+      <{if $start_page <= 1 and $pager.current_page <= 1 }>
+        <a class="Invalid">首页</a>
+        <a class="Invalid">上一页</a>
+      <{elseif $pager.current_page > 1 and $pager.total_page <= $max_page}>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.prev_page}>">上一页</a>
+      <{elseif  $pager.current_page > 1 and $pager.current_page<=$max_page}>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.prev_page}>">上一页</a>
+      <{else}>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.prev_page}>">«</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.current_page-$max_page}>">-<{$max_page}></a>
+      <{/if}>
+      <!--开始循环页码，同时如果循环到当前页设置属性为active-->
+      <{foreach from = $pager.all_pages item = thepage}>        
+      <{if $thepage <= $end_page and $thepage >= $start_page}>  
+          <{if $thepage == $pager.current_page}>
+              <a class="present"><{$thepage}></a>
+              <{else}>
+              <a href="<{spUrl c=$c a=$a gid=$g.id page=$thepage}>"><{$thepage}></a>
+          <{/if}>
+       <{/if}>
+      <{/foreach}>
+      <{if $end_page == $pager.total_page }> 
+      <{if $pager.current_page == $pager.last_page}>
+        <a class="Invalid">下一页</a>
+        <a class="Invalid">尾页</a>
+      <{else}>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.next_page}>">下一页</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.last_page}>">尾页</a>
+      <{/if}>
+      <{else}> 
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.current_page+$max_page}>">+<{$max_page}></a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.next_page}>">下一页</a>
+        <a href="<{spUrl c=$c a=$a gid=$g.id page=$pager.last_page}>">尾页</a>
+      <{/if}> 
+      </div>
+	</td>
+  </tr>
+</table>
+</div>
+<div class="b15"></div>
+<{/if}>
+<!--分页 end-->
+
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModal">
+  <div class="modal-dialog modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="replyModal">管理员回复：</h4>
+      </div>
+      <div class="modal-body">
+		<div id="replyForm"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!--content End-->
+<script>
+function delconfirm(mold,v,tit){
+	if( window.confirm(tit) ){
+		window.location = "<{spUrl c=adminMessage a=del}>&mold="+mold+"&v="+v;
+	}
+}
+</script>
+</body>
+</html>

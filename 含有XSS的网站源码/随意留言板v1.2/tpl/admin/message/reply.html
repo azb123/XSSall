@@ -1,0 +1,31 @@
+<div class="megList">
+  <div class="head"><img src="<{tpl_HeadImg qq=$m.qq mold=$g.gHead}>" /></div>
+  <div class="meg">
+    <div class="mTop">
+      <span class="fl">网友：<{$m.name}>&nbsp;&nbsp;&nbsp;发布时间：<{tpl_dateTime format='Y年m月d日 H:i' timestamp=$m.addtime}> - <{tpl_formatTime date=$m.addtime type=1}></span>
+      <span class="fr">ID:<{$m.id}></span>
+      <div class="clear"></div>
+    </div>
+    <div class="mContent"><{$m.message}></div>
+    <div class="mSm">
+      <span class="fl"><{$m.address}>（<{$m.ip}>）</span>
+      <span class="fr">赞（<{$m.good}>）</span>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<hr />
+<div class="form-group">
+<{if $m.status eq 'no'}>
+<label class="radio-inline"><input name="status" type="radio" id="statusNo" value="no" checked="checked"> 隐藏</label>
+<label class="radio-inline"><input name="status" type="radio" id="statusYes" value="yes"> 显示</label>
+<{elseif $m.status eq 'yes'}>
+<label class="radio-inline"><input name="status" type="radio" id="statusNo" value="no"> 隐藏</label>
+<label class="radio-inline"><input name="status" type="radio" id="statusYes" value="yes" checked="checked"> 显示</label>
+<{/if}>
+</div>
+<div class="form-group">
+<textarea class="form-control" rows="5" placeholder="回复内容……" id="replyVal"><{$m.reply}></textarea>
+</div>
+<button type="button" class="btn btn-success btn-block" onClick="replyButton('<{$m.id}>')">提交回复</button>

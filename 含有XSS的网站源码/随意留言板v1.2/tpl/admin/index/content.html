@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>主体</title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li>后台首页</li>
+  </ul>
+</div>
+
+<!--content-->
+<div class="content">
+<div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 系统信息</div>
+      <!-- Table -->
+      <table class="table">
+      <thead>
+      </thead>
+    <tbody>
+      <tr>
+        <td scope="row">当前域名</td>
+        <td><{$fuwuqi.url}></td>
+        <td>操作指南</td>
+        <td><a href="http://syguestbook.logphp.com" target="_blank">点击进入</a></td>
+        </tr>
+      <tr>
+        <td scope="row">欢迎管理员</td>
+        <td><{$smarty.session.admin.username}> (<a href="<{spUrl c=admin a=Administrator id=$smarty.session.admin.id}>" target="mainFrame">修改密码</a>)</td>
+        <td>管理等级</td>
+        <td><{$smarty.session.admin.admin}></td>
+      </tr>
+      <tr>
+        <td scope="row">程序系统</td>
+        <td><{$smarty.const.WEBNAME}></td>
+        <td>系统版本</td>
+        <td><{$smarty.const.VERSIONNUMBER}></td>
+      </tr>
+      <tr>
+        <td width="120" scope="row">PHP版本</td>
+        <td><{$fuwuqi.phpv}></td>
+        <td width="120">运行方式</td>
+        <td><{$fuwuqi.yxfs}></td>
+        </tr>
+      <tr>
+        <td scope="row">最大占用内存</td>
+        <td><{$fuwuqi.memory_limit}></td>
+        <td>脚本超时时间</td>
+        <td><{$fuwuqi.max_execution_time}> 秒</td>
+      </tr>
+      <tr>
+        <td scope="row">Curl支持</td>
+        <td><{$fuwuqi.curl_init}></td>
+        <td>FTP支持</td>
+        <td><{$fuwuqi.ftp_login}></td>
+      </tr>
+      <tr>
+        <td scope="row">Session支持</td>
+        <td><{$fuwuqi.session_start}></td>
+        <td>Cookie 支持</td>
+        <td><{$fuwuqi.CookieYes}></td>
+      </tr>
+      <tr>
+        <td scope="row">上传限制</td>
+        <td><{$fuwuqi.upload_max_filesize}></td>
+        <td><span style="font-size:12px">问题反馈</span></td>
+        <td><a href="http://syguestbook.sucainiu.com" target="_blank">随意留言板</a></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+</div><!--content End-->
+</body>
+</html>

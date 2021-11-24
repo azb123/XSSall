@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=yes" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title><{$g.gName}> - Powered by SyGouestBook</title>
+<meta name="keywords" content="<{$g.gKeywords}>" />
+<meta name="description" content="<{$g.gDescription}>" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" media="screen" />
+<link rel="stylesheet" type="text/css" href="<{$template}>/css/style.css"/>
+<script type="text/javascript" src="<{$template}>/css/jquery.min.js"></script>
+<script type="text/javascript">
+function good(mid)
+  {
+    $.ajax({
+	  type:"POST",
+	  url:"<{spUrl c=guestbook a=AjaxGood}>",
+	  data:"mid="+mid,
+	  cache:false,
+	  success:function(data){
+		$("#good"+mid).html(data);
+	  }
+  });
+  return false;
+  }
+</script>
+</head>
+
+<body>
+<!--wrapper-->
+<div class="SY_wrapper border_radius_5px">
+<div class="adminlist">
+  <span class="fl">管理员：<{tpl_adminuserList gid=$g.id}></span>
+  <span class="fr"><{tpl_MegSum gid=$g.id}></span>
+  <div class="clear"></div>
+</div>
+
+<div class="b15"></div>
+
+<{if $g.gDisplay eq 'yes'}>
+
+<{$i = 0}>
+<{foreach from=$message item=m}>
+<{$i = $i+1}>
+<div class="megList <{cycle values="bg1,bg2"}>">
+  <div class="meg">
+    <div class="mTop">
+      <span class="fl"><span class="user ico"><{$m.name}></span>&nbsp;&nbsp;&nbsp;<span class="time ico"><{tpl_formatTime date=$m.addtime type=1}></span></span>
+      <span class="fr">#<{$i}></span>
+      <div class="clear"></div>
+    </div>
+    <div class="mContent">
+      <div><{$m.message}></div>
+      <{if $m.reply}>
+      <div class="reply">
+        <div class="tit">管理员<{$m.replyAdmin}>回复：</div>
+        <div class="con"><{$m.reply}></div>
+      </div>
+      <{/if}>
+    </div>
+    <div class="mSm">
+      <span class="fl"><span class="address ico"><{$m.address}></span></span>
+      <span class="fr" id="good<{$m.id}>"><a class="good ico" onclick="javascript:good('<{$m.id}>');">赞一下（<{$m.good}>）</a></span>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<{/foreach}>
+
+<!--分页-->
+<{if $pager}>
+
+<div class="b15"></div>
+
+<div class="pag">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center">
+      <div class="pager">
+      共有记录<{$pager.total_count}>条，共有<{$pager.total_page}>页（每页<{$pager.page_size}>条）：
+      <{$max_page=5}>
+      <!--每页最大页码数-->
+      <!--开始及结束页码--> 
+      <{if $pager.current_page%$max_page ==0}>
+      	<{$start_page=floor($pager.current_page/$max_page)*$max_page+1-$max_page}>
+      <{else}>
+      	<{$start_page=floor($pager.current_page/$max_page)*$max_page+1}>
+      <{/if}>     
+      <{if ($start_page+$max_page)<=$pager.total_page}>
+      	<{$end_page=$start_page+$max_page-1}>
+      <{else}>
+      	<{$end_page=$pager.total_page}>
+      <{/if}>
+      <{if $start_page <= 1 and $pager.current_page <= 1 }>
+        <a class="Invalid">首页</a>
+        <a class="Invalid">上一页</a>
+      <{elseif $pager.current_page > 1 and $pager.total_page <= $max_page}>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.prev_page}>">上一页</a>
+      <{elseif  $pager.current_page > 1 and $pager.current_page<=$max_page}>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.prev_page}>">上一页</a>
+      <{else}>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.first_page}>">首页</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.prev_page}>">«</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.current_page-$max_page}>">-<{$max_page}></a>
+      <{/if}>
+      <!--开始循环页码，同时如果循环到当前页设置属性为active-->
+      <{foreach from = $pager.all_pages item = thepage}>        
+      <{if $thepage <= $end_page and $thepage >= $start_page}>  
+          <{if $thepage == $pager.current_page}>
+              <a class="present"><{$thepage}></a>
+              <{else}>
+              <a href="<{spUrl c=$c a=$a id=$g.id page=$thepage}>"><{$thepage}></a>
+          <{/if}>
+       <{/if}>
+      <{/foreach}>
+      <{if $end_page == $pager.total_page }> 
+      <{if $pager.current_page == $pager.last_page}>
+        <a class="Invalid">下一页</a>
+        <a class="Invalid">尾页</a>
+      <{else}>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.next_page}>">下一页</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.last_page}>">尾页</a>
+      <{/if}>
+      <{else}> 
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.current_page+$max_page}>">+<{$max_page}></a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.next_page}>">下一页</a>
+        <a href="<{spUrl c=$c a=$a id=$g.id page=$pager.last_page}>">尾页</a>
+      <{/if}> 
+      </div>
+	</td>
+  </tr>
+</table>
+</div>
+<div class="b15"></div>
+<{/if}>
+<!--分页 end-->
+
+<{elseif $g.gDisplay eq 'no'}>
+<div class="gDisplayNo">已关闭留言显示！</div>
+<div class="b15"></div>
+<{/if}>
+
+<a name="MegAddForm" id="MegAddForm"></a>
+<div class="megAdd">
+  <div class="addform basic-grey">
+    <h1>在线留言<span>请认真填写您的留言信息，以便我们能更快的处理您的问题！</span></h1>
+    <form id="MyMegForm" name="MyMegForm" method="post" action="<{$url}><{spUrl c=guestbook a=megAddPost gid=$g.id}>">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="45" align="center"><span class="Prompt">昵称</span></td>
+          <td>
+            <input type="text" name="name" id="name" datatype="*2-30" nullmsg="昵称不能为空！" errormsg="昵称必须为2~30个字符!" value="<{$smarty.cookies.valueName}>" /></td>
+        </tr>
+        <tr>
+          <td align="center"><span class="Prompt">QQ</span></td>
+          <td><input type="text" name="qq" id="qq" datatype="n5-12" errormsg="QQ格式错误!" nullmsg="QQ号不能为空！" value="<{$smarty.cookies.valueQq}>" /></td>
+        </tr>
+        <tr>
+          <td align="center"><span class="Prompt">留言<br />内容</span></td>
+          <td>
+            <textarea name="message" id="message" cols="45" rows="5" datatype="*" nullmsg="留言内容不能为空！"></textarea></td>
+        </tr>
+        <tr>
+          <td align="center">验证</td>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="130"><input type="text" name="verifycode" id="verifycode" datatype="n4-4" errormsg="验证码格式错误!" nullmsg="验证码不能为空！" style="width:100px;"  /></td>
+              <td><img id="img" class="verifycodeImg" style="width:90px; height:30px; cursor:pointer; margin-bottom:15px;" src="<{$url}><{spUrl c=main a=verifyCode}>" onclick="document.getElementById('img').src='<{$url}><{spUrl c=main a=verifyCode}>&amp;tm='+Math.random()"></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><input type="submit" class="submit" name="submit" id="submit" value="提交留言" />&nbsp;&nbsp;&nbsp;&nbsp;<span id="msgSpan">文明上网，理性发言！</span></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div class="clear"></div>
+</div>
+
+</div><!--wrapper End-->
+
+<div class="SY_footer">Powered by <a href="http://syguestbook.logphp.com" target="_blank">SyGouestBook</a></div>
+
+<script type="text/javascript" src="<{$template}>/css/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript">
+$(function(){		
+	$("#MyMegForm").Validform({
+		tiptype:function(msg,o,cssctl){
+			var objtip=$("#msgSpan");
+			cssctl(objtip,o.type);
+			objtip.text(msg);
+		},
+		ajaxPost:false
+	});
+})
+</script>
+</body>
+</html>

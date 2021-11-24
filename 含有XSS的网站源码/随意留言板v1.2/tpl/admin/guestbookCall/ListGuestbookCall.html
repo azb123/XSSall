@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>主体</title>
+<link href="tpl/admin/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/jquery.min.js"></script>
+<link href="tpl/admin/css/Bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="tpl/admin/css/Bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="admin-bread">
+  <span class="fr">
+    <{include file="admin/index/smalltop.html"}>
+  </span>
+  
+  <ul class="fl">
+      <li><a href="<{spUrl c=admin a=content}>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 开始</a></li>
+      <li>/</li>
+      <li><{$title}></li>
+  </ul>
+</div>
+
+<!--content-->
+<div class="content">
+<div class="panel panel-default">
+      <!-- Default panel contents -->
+    <div class="panel-heading">
+      
+      <!-- Default panel contents -->
+      <div class="panel-body">
+      <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+          <button class="btn btn-primary dropdown-toggle btn-lg" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <{$guestbook.gName|default:'请选择要调用的留言板'}> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+          <{foreach from=$lists item=list}>
+            <li><a href="<{spUrl c=guestbookCall a=ListGuestbookCall gid=$list.id}>"><{$list.gName}></a></li>
+          <{/foreach}>
+          </ul>
+        </div><!-- /btn-group -->
+      </div>
+      </div><!-- Default panel contents End -->
+      
+    </div>
+
+      <!-- Table -->
+      <table class="table">
+        <{if $guestbook}>
+        <thead>
+          <tr>
+            <th width="240"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> IFRAME调用:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">
+            <pre>&lt;iframe name=&quot;SyGuestBook&quot; src=&quot;<{$url}>?c=guestbook&amp;id=<{$guestbook.id}>&quot; width=&quot;100%&quot; height=&quot;1500&quot; frameborder=&quot;0&quot; scrolling=&quot;auto&quot;&gt;&lt;/iframe&gt;</pre>
+            <p>优点：兼容性好，万金油的调用方式</p>
+            <p>缺点：不能自适应高度，不美观。（比较适合风格比较简单的模板，最好是响应式的）</p>
+            <p class="text-danger">注意事项：宽度（width=100%）可以不管。最主要是设置高度（height=？），要调整到适合你网站的高度。</p>
+            </td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th width="240"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> JS调用:（个人比较喜欢的调用方式）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">
+            <pre>&lt;script name=&quot;SyGuestBook&quot; charset=&quot;UTF-8&quot; type=&quot;text/javascript&quot; src=&quot;<{$url}>?c=main&amp;a=jsMessage&amp;gid=<{$guestbook.id}>&quot;&gt;&lt;/script&gt;</pre>
+            <p>优点：自适应高度，调用后违和感很低。</p>
+            <p>缺点：JS跨域了，无法使用AJAX，所以无法翻页，默认显示最新20条留言，使用了内置的模板。另外也有可能出现兼容问题</p>
+            <p class="text-danger">注意事项：出现乱码的的话要注意把（charset=UTF-8）改为你网站的编码。例如你要调用留言板的网站编码是GBK，则要改为“charset=GBK”</p>
+            </td>
+          </tr>
+        </tbody>
+        <{else}>
+        <thead>
+          <tr>
+            <th width="240"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 提示：请在上方选择要调用的留言板</th>
+          </tr>
+        </thead>
+        <{/if}>
+      </table>
+  </div>
+</div><!--content End-->
+</body>
+</html>
