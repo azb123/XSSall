@@ -1,0 +1,63 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="jfstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="formwrapper">
+<fieldset>
+ <legend><span >配置数据库<font color=red>(数据库存在将被覆盖)</font></span></legend>
+   <label >
+   <form action='./install.php?step=5' method="post">
+ <div>
+   <label for="">MySQL主机名：<input type="text" class="text_m" name="host" value="<?php echo $CONF['db']['host']; ?>">*</label>
+   
+
+</div>
+ <div>
+   <label for="">MySQL用户名：<input type="text" class="text_m" name="user" value="<?php echo $CONF['db']['user']; ?>">*</label>
+
+</div>
+ <div>
+   <label for="">MySQL密码：  <input type="password" class="text_m" name="password" value="">*</label>
+
+</div>
+ <div>
+   <label for="">数据库名称：  <input type="text" class="text_m" name="database" value="<?php echo $CONF['db']['name']; ?>">*</label>
+
+</div>
+ <div>
+   <label for="">数据表前缀： <input type="text" class="text_m" name="prefix" value="<?php echo $CONF['db']['prefix']; ?>">*</label>
+
+</div>
+ <div>
+   <label for="">数据表编码：<input type="text" class="text_m" name="charset" value="<?php echo $CONF['db']['charset']; ?>">*</label>
+
+</div>
+ <div>
+   <label for=""><input type="submit" name="submit" value="下一步：导入数据表"></label>
+
+</div>
+
+		</form>
+
+
+
+   </label>
+   	</fieldset>
+   
+	
+
+		<div class="btn-box">
+			<input type="button" class="buttom" value="后退" onclick="window.location.href='install.php?step=1';" />
+			
+		</div>
+
+
+</div>
+
+</body>
+</html>

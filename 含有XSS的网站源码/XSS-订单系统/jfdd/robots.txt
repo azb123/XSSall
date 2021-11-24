@@ -1,0 +1,13 @@
+#
+# robots.txt for JFDD
+# Version v1.0
+#
+
+User-agent: *
+
+Disallow: /admin/
+Disallow: /install/
+Disallow: /lib/
+Disallow: /images/
+
+

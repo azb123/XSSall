@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="jfstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="formwrapper">
+<fieldset>
+ <legend><span >服务器信息</span></legend>
+   <label >
+ <table  >
+			<tr>
+				<th width="300" align="center"><strong></strong></th>
+				<th width="424"><strong>参数值</strong></th>
+			</tr>
+			<tr>
+					<td><strong>服务器域名</strong></td>
+					<td><?php echo $_SERVER['SERVER_NAME']; ?></td>
+			</tr>
+			<tr>
+					<td><strong>服务器操作系统</strong></td>
+					<td><?php echo @getenv('OS'); ?></td>
+			</tr>
+			<tr>
+					<td><strong>服务器解译引擎</strong></td>
+					<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+			</tr>
+			<tr>
+					<td><strong>PHP版本</strong></td>
+					<td><?php echo phpversion(); ?></td>
+			</tr>
+			<tr>
+					<td><strong>系统安装目录</strong></td>
+					<td><?php echo JFDD_INSTALL; ?></td>
+			</tr>
+			<tr>
+					<td><strong>网站根目录</strong></td>
+					<td><?php echo JFDD_ROOT; ?></td>
+			</tr>
+			
+			
+		</table>
+		
+
+
+
+   </label>
+   	</fieldset>
+   <fieldset>
+    <legend><span >系统环境检测</span></legend>
+	  <label > <div >
+			系统环境要求必须满足下列所有条件，否则系统或系统部份功能将无法使用。
+		</div> </label >
+	<label>
+	
+		
+		<table >
+			<tr>
+				<th width="200" ><strong>需开启的变量或函数</strong></th>
+				<th width="100"><strong>要求</strong></th>
+				<th width="200"><strong>实际状态及建议</strong></th>
+			</tr>
+			
+	
+	<tr>
+		<td>MySQL数据库支持：</td>
+		<td align="center">On</td>
+		<td><?php if(function_exists("mysql_close")){ echo "<font color=black>支持</font>"; }else{ $must = 0;echo "<font color=red>不支持</font>"; } ?> <small>(不支持无法使用本系统)</small></td>
+	</tr>
+	<tr>
+		<td>安装目录是否可写：</td>
+		<td align="center">可写</td>
+		<td><?php if(is_writable(JFDD_INSTALL)){ echo "<font color=black>可写</font>"; }else{ $must = 0;echo "<font color=red>不可写</font>"; } ?> 位置：<?php echo JFDD_INSTALL; ?></td>
+	</tr>
+			<tr>
+					<td>safe_mode</td>
+					<td align="center">Off</td>
+					<td><?php echo $sp_safe_mode; ?> <small>(本系统不支持在<span class="STYLE2">非win主机的安全模式</span>下运行)</small></td>
+			</tr>
+	
+	
+		</table>
+	</label>
+	  </fieldset>
+	  
+	   <fieldset>
+    <legend><span >目录权限检测</span></legend>
+	  <label > <div >
+			系统所有目录及文件列表
+			<?php
+			
+
+			
+		echo '本系统共有'.get_file_count2(JFDD_INSTALL).'个文件，';
+$dir=JFDD_INSTALL;
+			$arr = scandir($dir); 
+			$dir2=JFDD_INSTALL."/admin/";
+			$arr2 = scandir($dir2); 
+$php = count(preg_grep("/\.php$/", $arr));
+$php2 = count(preg_grep("/\.php$/", $arr2));
+echo '其中根目录共有php文件'.$php.'个,admin文件夹共有php文件'.$php2.'个';?>
+		</div> </label >
+	<label>
+	
+
+	<table  border="2">
+			<tbody>
+			<tr>
+					<td>文件/目录名</td><td>文件大小</td><td>文件修改时间</td><td>文件权限</td><td>文件所有者</td>
+				<?php
+
+			foreach(glob("../*") as $files)
+{ 
+
+$files1 = iconv('GB2312','UTF-8',$files);
+$rsta = (is_readable($files) ? '<font color=green>[√]读</font>' : '<font color=red>[×]读</font>');
+$wsta = (TestWrite($files) ? '<font color=green>[√]写</font>' : '<font color=red>[×]写</font>');
+
+     if(is_dir($files))
+     echo "<tr><td colspan='5'><font color=red>目录为:".$files.$rsta.$wsta."</font></td></tr>";
+     else
+     echo "<tr><td>".$files1.$rsta.$wsta."</td><td>".number_format((float)(filesize($files)/1024),2)."kb</td><td>".date('Y-m-d h:i:s',filemtime($files))."</td><td>".fileperms($files)."</td><td>".fileowner($files)."</td><tr>";
+}
+
+foreach(glob("../*/*") as $files)
+{ 
+
+$files1 = iconv('GB2312','UTF-8',$files);
+$rsta = (is_readable($files) ? '<font color=green>[√]读</font>' : '<font color=red>[×]读</font>');
+$wsta = (TestWrite($files) ? '<font color=green>[√]写</font>' : '<font color=red>[×]写</font>');
+
+     if(is_dir($files))
+     echo "<tr><td colspan='5'><font color=red>目录为:".$files.$rsta.$wsta."</font></td></tr>";
+     else
+     echo "<tr><td>".$files1.$rsta.$wsta."</td><td>".number_format((float)(filesize($files)/1024),2)."kb</td><td>".date('Y-m-d h:i:s',filemtime($files))."</td><td>".fileperms($files)."</td><td>".fileowner($files)."</td><tr>";
+}
+?>
+			</tr>
+			</tboyd>
+			</table>
+		
+		
+			
+
+	</label>
+	  </fieldset>
+
+
+		<div class="btn-box">
+			<input type="button" class="buttom" value="后退" onclick="window.location.href='install.php?step=0';" />
+			<input type="button" class="buttom" value="继续" onclick="window.location.href='install.php?step=2';" />
+		</div>
+
+
+</div>
+
+</body>
+</html>

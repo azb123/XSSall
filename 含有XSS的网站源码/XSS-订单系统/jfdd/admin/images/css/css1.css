@@ -1,0 +1,21 @@
+
+ body {  
+    font-size: 11px;  
+    background:#fff;  
+    font-family:Verdana, Geneva, sans-serif;  
+} 
+
+table {
+border-collapse: collapse;
+border: 1px blue solid;
+}
+
+td {
+  border: 1px red solid;
+  font-size: 11px; padding:0 5px;
+}
+
+th { background:#00004f; height:22px; color:#FFF; font-weight:normal; border-top:1px solid #000c74; border-right:1px solid #003; border-bottom:1px solid #003; border-left:1px solid #000c74; padding:0 5px;} 
+
+.odd td { background:#333; height:22px; border-top:1px solid #444; border-right:1px solid #222; border-bottom:1px solid #222; border-left:1px solid #444; color:#FFF;}  
+.even td { background:#444; height:22px; border-top:1px solid #555; border-right:1px solid #333; border-bottom:1px solid #333; border-left:1px solid #555; color:#FFF;}

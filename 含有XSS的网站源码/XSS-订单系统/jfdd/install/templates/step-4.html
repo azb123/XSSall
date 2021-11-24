@@ -1,0 +1,51 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link href="jfstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="formwrapper">
+<fieldset>
+ <legend><span >设置管理员</span></legend>
+   <label >
+   <form action='./install.php?step=4' method="post">
+ <div>
+   <label for="">管理员用户名：<input type="text" class="text_m" name="username" >*</label>
+</div>
+ <div>
+   <label for="">密码：<input type="text" class="text_m" name="userpws" >*</label>
+
+</div>
+<div>
+   <label for="">密码密钥（任意数值）：<input type="text" class="text_m" name="userkey" >*</label>
+
+</div>
+
+ 
+ <div>
+   <label for=""><input type="submit" name="submit" value="下一步：完成安装"></label>
+
+</div>
+
+		</form>
+
+
+
+   </label>
+   	</fieldset>
+   
+	
+
+		<div class="btn-box">
+			<input type="button" class="buttom" value="后退" onclick="window.location.href='install.php?step=2';" />
+			
+		</div>
+
+
+</div>
+
+</body>
+</html>

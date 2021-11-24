@@ -1,0 +1,7 @@
+	body {font-size:12px; color:#111;}
+	
+	a {color:#111; text-decoration:none;}
+	a:hover {color:red; text-decoration:underline;}
+	
+	.div {overflow:hiden; width:100%; height:auto;}
+	

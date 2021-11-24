@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="{$ROOT_ADMIN_PATH}images/css/css1.css" type="text/css" rel="stylesheet" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="{$CONF['web']['copyright']}"> 
+<meta type="keywords" content="{$CONF['web']['keyword']}">
+<meta type="description" content"{$CONF['web']['description']}">
+
+
+
+<title>{$CONF['web']['title']}-管理后台</title>
+
+
+  
+
+</head>
+
+<body>
+<center>
+<script type="text/javascript">
+function refresh(){
+    window.location.href=window.location.href;
+}
+
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table">  
+<tr  >
+    
+
+      <td><button onclick="window.location.href('login_out.php')" >退出系统</button></td>
+	  <td><button onclick="refresh()">更新缓存</button>
+
+</td>
+<td></td>
+    </tr>
+  <tr>  
+    <th  align="center">ID</th>  
+    <th align="center">野战活动场地选择</th>  
+	<th align="center">是否带有小孩</th>
+	<th align="center">是否已经在线支付</th>
+<th align="center">参加活动人数</th>
+<th align="center">到场日期</th>
+<th align="center">联系人</th>
+<th align="center">联系电话</th>	
+<th align="center">联系QQ</th>	
+<th align="center">具体要求</th>
+<th align="center">IP地址</th>
+<th align="center">提交日期</th>		
+<th align="center">操作</th>
+<th align="center">审核</th>
+	
+  </tr>  
+  
+
+{loop $arr[0] as $key=>$value}
+ <li>{$value}</li><br>
+{/loop}
+
+{loop $arr[1] as $key=>$value}
+ <li>{$value}</li><br>
+{/loop}
+
+{loop $rs as $var}
+
+
+	<tr class="{if $i%2==0}odd{else}even{/if}" >
+
+	  <td ><font color=orange>{$i}</font></td>
+	  <td >{$rs["jf_area"]}</td>
+	  <td ><?php if($rs["jf_child"]==0) {echo "没带小孩";}else echo "<font color=red>"."带小孩了"."</font>";?></td>
+	  <td ><?php if($rs["jf_pay"]==1) {echo "已支付";}else echo "<font color=red>"."未支付"."</font>";?></td>
+	  <td ><?php echo $rs["jf_renshu"]?></td>
+	  <td ><?php echo $rs["jf_comedate"]?></td>
+	  <td ><?php echo $rs["jf_user"]?></td>
+	  <td ><?php echo $rs["jf_pnum"]?></td>
+	  <td ><?php echo $rs["jf_qq"]?></td>
+	  <td ><?php echo $rs["jf_note"]?></td>
+	  <td ><?php echo $rs["jf_ip"]?></td>
+	  <td ><?php  echo date('m-d G:i:s', $rs["jf_intime"]);  ?></td>
+
+	  
+	
+	 
+
+	  <td><a href="admin_del.php?id=<?php echo $rs["jf_id"]?>">删除</a></td>
+		<td><a href="admin_pass.php?id=<?php echo $rs["jf_id"]?>&pass=<?php echo $rs["jf_pass"]?>"><?php if ($rs["jf_pass"]=="no")echo "<font color=red>"."未审核"."</font>";else echo "<font color=yellow>"."已审核"."</font>";?></a></td>
+	
+	  </tr>
+	
+	  {/loop}
+	 
+	
+
+  
+</table>
+</center>
+</body>
+
+
+</html>
